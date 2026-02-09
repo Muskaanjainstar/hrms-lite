@@ -1,0 +1,64 @@
+DEPLOYMENT.md
+
+# Deployment Guide – HRMS Lite
+
+This document contains all required deployment configurations and commands
+for deploying the backend on Render and frontend on Vercel.
+
+---
+
+## 🔹 BACKEND DEPLOYMENT (Render)
+
+### 1. Backend Server Configuration
+
+File: `backend/server.js`
+
+```js
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+
+const employeeRoutes = require("./routes/employeeRoutes");
+const attendanceRoutes = require("./routes/attendanceRoutes");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/employees", employeeRoutes);
+app.use("/api/attendance", attendanceRoutes);
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error(err));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+npm install
+node server.js
+MONGO_URI = mongodb+srv://<username>:<password>@cluster.mongodb.net/hrms
+https://hrms-backend.onrender.com
+https://hrms-backend.onrender.com/api/employees
+
+import axios from "axios";
+
+export default axios.create({
+  baseURL: "https://hrms-backend.onrender.com/api"
+});
+npm run build
+dist
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
+https://hrms-lite.vercel.app
+
+git add .
+git commit -m "Configure deployment for frontend and backend"
+git push
