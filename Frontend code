@@ -1,0 +1,12 @@
+import axios from "axios";
+
+export default axios.create({
+  baseURL: "http://localhost:5000/api"
+});
+
+cd frontend
+npm install
+npm run dev
+
+Local: http://localhost:5173
+

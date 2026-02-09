@@ -1,0 +1,31 @@
+
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/hrms
+
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+
+const employeeRoutes = require("./routes/employeeRoutes");
+const attendanceRoutes = require("./routes/attendanceRoutes");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.use("/api/employees", employeeRoutes);
+app.use("/api/attendance", attendanceRoutes);
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error(err));
+
+app.listen(5000, () => {
+  console.log("Server running on http://localhost:5000");
+});
+cd backend
+npm install
+npm start
+MongoDB connected
+Server running on http://localhost:5000
